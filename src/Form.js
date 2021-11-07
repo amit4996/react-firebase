@@ -1,11 +1,11 @@
-import { useState } from "react/cjs/react.development";
+import {useState } from 'react';
 import {db,storage} from "./Firebaseconfig"
 import {doc,updateDoc} from "@firebase/firestore"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle, faTimesCircle,faUpload } from '@fortawesome/free-solid-svg-icons'
 import {ref,getDownloadURL,uploadBytesResumable} from "firebase/storage"
 
-const Form=({closehandler,id,data,refreshhandler})=>{
+const Form=({Closehandler,id,data,Refreshhandler})=>{
 
     const [updateddata,setUpdatedData]=useState({name:data.name,price:data.price,mrp:data.mrp,discount:data.discount,description:data.description,size:data.size,quantity:data.quantity,color:data.color,occassion:data.occassion,url:data.url});
     const [imagenew,setimagenew]=useState(null)
@@ -83,8 +83,8 @@ const Form=({closehandler,id,data,refreshhandler})=>{
            else{
             const productDoc=doc(db,"products",id)
             await updateDoc(productDoc,{name:updateddata.name,price:updateddata.price,mrp:updateddata.mrp,discount:updateddata.discount,description:updateddata.description,size:updateddata.size,quantity:updateddata.quantity,color:updateddata.color,occassion:updateddata.occassion,url:updateddata.url})
-            closehandler();
-            refreshhandler();
+            Closehandler();
+            Refreshhandler();
            }
         
       }
@@ -92,7 +92,7 @@ const Form=({closehandler,id,data,refreshhandler})=>{
        <div className="form">
            <div className="innerform">
               <h3>Edit Product Details</h3>
-              <button className="btnclose" onClick={closehandler}><FontAwesomeIcon icon={faTimesCircle} /></button>
+              <button className="btnclose" onClick={Closehandler}><FontAwesomeIcon icon={faTimesCircle} /></button>
               {alertmsg==null?null:<p className="alert">{alertmsg}</p>}
               <div className="inputcontainer">
               <div className="uploadcontainer">
@@ -102,13 +102,21 @@ const Form=({closehandler,id,data,refreshhandler})=>{
               </div>
               {imagenewprogress===100?<p className="uploadsuccessfull">Image Uploaded Successfully</p>:<p></p>}
               <input  value={updateddata.name} name="name" onChange={(e)=>{setUpdatedData({...updateddata,[e.target.name]:e.target.value})}}></input>
-              <input placeholder="Price" value={updateddata.price} name="price" onChange={(e)=>{setUpdatedData({...updateddata,[e.target.name]:e.target.value})}}></input>
-              <input placeholder="MRP" value={updateddata.mrp} name="mrp"  onChange={(e)=>{setUpdatedData({...updateddata,[e.target.name]:e.target.value})}}></input>
-              <input placeholder="Discount" value={updateddata.discount}  name="discount" onChange={(e)=>{setUpdatedData({...updateddata,[e.target.name]:e.target.value})}}></input>
+              <input placeholder="Price" type="number" value={updateddata.price} name="price" onChange={(e)=>{setUpdatedData({...updateddata,[e.target.name]:e.target.value})}}></input>
+              <input placeholder="MRP"  type="number" value={updateddata.mrp} name="mrp"  onChange={(e)=>{setUpdatedData({...updateddata,[e.target.name]:e.target.value})}}></input>
+              <input placeholder="Discount" type="number"  value={updateddata.discount}  name="discount" onChange={(e)=>{setUpdatedData({...updateddata,[e.target.name]:e.target.value})}}></input>
               <input placeholder="Description" value={updateddata.description} name="description" onChange={(e)=>{setUpdatedData({...updateddata,[e.target.name]:e.target.value})}}></input>
               <input placeholder="Size" value={updateddata.size} name="size" onChange={(e)=>{setUpdatedData({...updateddata,[e.target.name]:e.target.value})}}></input>
-              <input placeholder="Quantity" value={updateddata.quantity} name="quantity"  onChange={(e)=>{setUpdatedData({...updateddata,[e.target.name]:e.target.value})}}></input>
-              <input placeholder="Color" value={updateddata.color} name="color" onChange={(e)=>{setUpdatedData({...updateddata,[e.target.name]:e.target.value})}}></input>
+              <input placeholder="Quantity" type="number" value={updateddata.quantity} name="quantity"  onChange={(e)=>{setUpdatedData({...updateddata,[e.target.name]:e.target.value})}}></input>
+             
+              {/* <input placeholder="Color" value={updateddata.color} name="color" onChange={(e)=>{setUpdatedData({...updateddata,[e.target.name]:e.target.value})}}></input> */}
+    
+              <select className="selectcolor" name="color" onChange={(e)=>{setUpdatedData({...updateddata,[e.target.name]:e.target.value})}}>
+               <option selected>Select Color</option>
+               <option value="Oxygen Blue">Oxygen Blue</option>
+               <option value="Cool Blue">Cool Blue</option>
+               </select>
+
               <input placeholder="Occassion" value={updateddata.occassion} name="occassion" onChange={(e)=>{setUpdatedData({...updateddata,[e.target.name]:e.target.value})}}></input>
               </div>
               <button className="btnaddnew" onClick={updateProducts}><FontAwesomeIcon icon={faCheckCircle} /> Update</button>

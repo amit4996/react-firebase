@@ -1,10 +1,10 @@
 
+import Form from './Form';
+import NewForm from './NewForm';
 import './main.css';
 import { useEffect, useState } from 'react';
 import { collection, deleteDoc, doc, getDocs,query,where } from '@firebase/firestore';
 import {db} from "./Firebaseconfig";
-import Form from './Form';
-import NewForm from './NewForm';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit, faPlusCircle,faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
@@ -20,10 +20,12 @@ function App() {
   const [refresh,setrefresh]=useState(false)
 
   const AddNewProduct=()=>{
+    console.log("Entered inside function")
     setAddNewProduct(true);
+    
   } 
 
-  const refreshhandler=()=>{
+  const Refreshhandler=()=>{
     refresh?setrefresh(false):setrefresh(true)
   }
 
@@ -51,10 +53,10 @@ function App() {
   
 
  
-  const closehandler=(e)=>{
+  const Closehandler=(e)=>{
     setDisplayForm(false)
   }
-  const closehandlerNF=(e)=>{
+  const ClosehandlerNF=(e)=>{
     setAddNewProduct(false)
   }
 
@@ -79,7 +81,7 @@ function App() {
 
   return (
     <div className="App">
-      <button className="btnaddnew" onClick={()=>{AddNewProduct()}}><FontAwesomeIcon icon={faPlusCircle} />  Add New Product</button>
+      <button className="btnaddnew" onClick={()=>{AddNewProduct();console.log("Clicked Successfully")}}><FontAwesomeIcon icon={faPlusCircle} />  Add New Product</button>
       
       <select className="select" onChange={getfilteredProducts} >
       
@@ -115,9 +117,11 @@ function App() {
         </div>
         </div>})}
         </div>
-        {displayform?<Form closehandler={closehandler} id={id} data={datatobeupdated} refreshhandler={refreshhandler} />:null}
-        {addnewproduct?<NewForm closehandlerNF={closehandlerNF} refreshhandler={refreshhandler} />:null}
-
+        {displayform?<Form  Closehandler={Closehandler} id={id} data={datatobeupdated} Refreshhandler={Refreshhandler} />:null}
+        {addnewproduct?<NewForm  ClosehandlerNF={ClosehandlerNF} Refreshhandler={Refreshhandler} />:null}
+        
+       
+       
       
     </div>
   );
