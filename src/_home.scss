@@ -1,0 +1,29 @@
+
+    .btnaddnew{
+        border:none;
+        padding:10px 20px;
+        margin:10px auto;
+        display: block;
+        background-color: #28A745;
+        color:#fff;
+        border-radius: 10px;
+        
+        &:hover{
+            opacity: 0.8;
+            color:#000;
+            box-shadow: 1px 1px 5px #333;
+        }
+    }
+    .choosefile{
+        background:none;
+        padding:50px;;
+    }
+
+    .select{
+         background-color:#17A2B8;
+         border:none;
+         padding:10px;
+         color:#fff;
+         display: block;
+         margin:10px auto;
+    }
